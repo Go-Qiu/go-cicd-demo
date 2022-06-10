@@ -47,7 +47,7 @@ jobs: # jobs to execute
       run: |
         go mod init github.com/go-qiu/go-cicd-demo
         go get github.com/franela/goblin
-        go get github.com/tebeka/go2xunit
+        go install github.com/tebeka/go2xunit@latest
         go mod tidy
         go test -v
         go test -v | go2xunit -output test.xml
