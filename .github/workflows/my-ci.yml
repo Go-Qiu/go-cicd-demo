@@ -28,6 +28,10 @@ jobs: # jobs to execute
         repository: lowkh2/GoSchoolRemoteExample
         token: ${{secrets.GO_SECRET}}
         path: remote
+    - name: Check File System - remote
+      run: |
+        cd remote
+        ls
     - name: Check File System
       run: ls
     - name: Install dependencies
