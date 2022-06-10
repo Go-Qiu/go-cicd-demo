@@ -1,1 +1,16 @@
-
+name: Demo CI for Go  # Naming the workflow
+on: # listen for triggering event
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    
+jobs: # jobs to execute
+  build: # name of the job
+    name: Load container # job name
+    runs-on: ubuntu-20.04 # os to run in container
+    steps: # defined steps
+    - name: Print Hello
+      run: |
+        ls
+        echo "Hello, there!!"
