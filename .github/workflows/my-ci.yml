@@ -22,6 +22,12 @@ jobs: # jobs to execute
       run: go version
     - name: Checkout Repo
       uses: actions/checkout@v2.4.2
+    - name: Checkout Remote Private Repo
+      uses: actions/checkout@v2.4.2
+      with: 
+        repository: lowkh2/GoSchoolRemoteExample
+        token: ${{secrets.GO_SECRET}}
+        path: remote
     - name: Check File System
       run: ls
     - name: Install dependencies
