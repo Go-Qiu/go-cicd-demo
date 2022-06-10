@@ -4,11 +4,11 @@ import (
 	"math"
 	"testing"
 
-	. "github.com/franela/goblin"
+	g "github.com/franela/goblin"
 )
 
 func TestCalc(t *testing.T) {
-	gob := Goblin(t)
+	gob := g.Goblin(t)
 	gob.Describe("Calc File", func() {
 		gob.It("should add two numbers ", func() {
 			gob.Assert(Add(1, 2)).Equal(3)
