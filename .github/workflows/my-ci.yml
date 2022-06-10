@@ -32,6 +32,7 @@ jobs: # jobs to execute
       run: |
         cd remote
         ls
+        cat myText.txt
     - name: Check File System
       run: ls
     - name: Install dependencies
