@@ -26,5 +26,7 @@ jobs: # jobs to execute
       run: ls
     - name: Install dependencies
       run: |
+        go mod init github.com/go-qiu/go-cicd-demo
         go get github.com/franela/goblin
+        go mod tidy
         go test -v
