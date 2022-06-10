@@ -10,34 +10,61 @@ jobs: # jobs to execute
     name: Load container # job name
     runs-on: ubuntu-20.04 # os to run in container
     steps: # defined steps
+    
     - name: Print Hello
       run: |
         ls
         echo "Hello, there!!"
+        
     - name: Setup Go
       uses:  actions/setup-go@v3.2.0
       with: 
         go-version: 1.18
+        
     - name: Check Go Version
       run: go version
+      
     - name: Checkout Repo
       uses: actions/checkout@v2.4.2
+      
     - name: Checkout Remote Private Repo
       uses: actions/checkout@v2.4.2
       with: 
         repository: lowkh2/GoSchoolRemoteExample
         token: ${{secrets.GO_SECRET}}
         path: remote
+        
     - name: Check File System - remote
       run: |
         cd remote
         ls
         cat myText.txt
+        
     - name: Check File System
       run: ls
+      
     - name: Install dependencies
       run: |
         go mod init github.com/go-qiu/go-cicd-demo
         go get github.com/franela/goblin
+        go get github.com/tebeka/go2xunit
         go mod tidy
         go test -v
+        go test -v | go2xunit -output test.xml
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: ${{ always() }}
+      with:
+        files: tests.xml
+    
+    - if: ${{ failure() }}
+      name: Create Issue Action
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Build Failed
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: worflow-failed
+        body: Workflow failed for commit ${{github.sha}}
+        
